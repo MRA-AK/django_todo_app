@@ -3,6 +3,9 @@ from django.contrib.auth.models import User
 
 
 class Task(models.Model):
+    """
+    Define a Task model in database.
+    """
     CHOICES = (
             ('1', 'High'),
             ('2', 'Medium'),

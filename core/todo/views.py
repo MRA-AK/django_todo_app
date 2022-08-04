@@ -14,6 +14,9 @@ from todo.models import Task
 
 
 class TaskListView(LoginRequiredMixin, ListView):
+    """
+    A CBV for showing a list of available tasks.
+    """
     model = Task
     context_object_name = "tasks"
     template_name = "todo/task_list.html"
@@ -23,6 +26,9 @@ class TaskListView(LoginRequiredMixin, ListView):
 
 
 class TaskCreateView(LoginRequiredMixin, CreateView):
+    """
+    A CBV for creating a new task.
+    """
     model = Task
     fields = ["title", "priority"]
     success_url = reverse_lazy("todo:task_list")
@@ -33,6 +39,9 @@ class TaskCreateView(LoginRequiredMixin, CreateView):
 
 
 class TaskUpdateVeiw(LoginRequiredMixin, UpdateView):
+    """
+    A CBV for updating available tasks.
+    """
     model = Task
     success_url = reverse_lazy("todo:task_list")
     form_class = TaskUpdateForm
@@ -41,6 +50,9 @@ class TaskUpdateVeiw(LoginRequiredMixin, UpdateView):
 
 
 class TaskCompleteView(LoginRequiredMixin, View):
+    """
+    A CBV for marking an available task as completed.
+    """
     model = Task
     success_url = reverse_lazy("todo:task_list")
 
@@ -52,6 +64,9 @@ class TaskCompleteView(LoginRequiredMixin, View):
 
 
 class TaskDeleteView(LoginRequiredMixin, DeleteView):
+    """
+    A CBV for deleting an available task.
+    """
     model = Task
     context_object_name = "task"
     success_url = reverse_lazy("todo:task_list")

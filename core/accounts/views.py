@@ -6,6 +6,9 @@ from accounts.forms import RegisterForm
 
 
 class RegisterView(CreateView):
+    """
+    A CBV for register new user.
+    """
     form_class = RegisterForm
     success_url = reverse_lazy('accounts:login')
     template_name = 'accounts/register.html'
