@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block link %}
+    <!-- Icons -->
+    <link rel="icon" href="img/mdb-favicon.ico" type="image/x-icon" />
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css" />
+    <!-- Google Fonts Roboto -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" />
+    <!-- End Icons -->
+{% endblock link %}
+
+{% block title %}ToDo{% endblock title %}
+
+{% block content %}
+    <div class="content-section mt-3">
+      <div class="card p-2 m-4">
+
+          <div class="text-center pt-3 pb-2">
+            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-todo-list/check1.webp" alt="Check" width="60">
+            <h2 class="my-4">Task List</h2>
+          </div>
+
+          <form class="p-2 mb-3" method="POST" action="{% url 'todo:create_task' %}">
+            {% csrf_token %}
+            <div class="input-group mb-3">
+              <input type="text" class="form-control rounded-4" required name="title" placeholder="Create new task"
+              aria-label="Recipient's username" aria-describedby="button-addon2">
+              <div class="col-md-3">
+                <select id="id_priority" name="priority" class="form-control">
+                  <option value="3" selected>Low</option>
+                  <option value="2">Medium</option>
+                  <option value="1">High</option>
+                </select>
+              </div>
+              <button class="btn btn-primary" type="submit">Add</button>
+            </div>
+          </form>
+          
+          {% if tasks %}
+          <table class="table m-0" style="width:100%">
+            <thead>
+              <tr class="h5">
+                <th style="width:60%">Task</th>
+                <th>Priority</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for task in tasks %}
+              <tr class="fw-normal">
+                <th class="td_title">
+                  {% if task.completed %}
+                  <span class="ms-2 text-secondary"><del>{{ task.title|title }}</del></span>
+                  {% else %}
+                  <span class="ms-2">{{ task.title|title }}</span>
+                  {% endif %}
+                </th>
+                <td class="align-middle">
+                  {% if task.priority == '1' %}
+                  <h6 class="mb-0"><span class="badge bg-danger">{{ task.get_priority_display }}</span></h6>
+                  {% elif task.priority == '2' %}
+                  <h6 class="mb-0"><span class="badge bg-warning">{{ task.get_priority_display }}</span></h6>
+                  {% else %}
+                  <h6 class="mb-0"><span class="badge bg-success">{{ task.get_priority_display }}</span></h6>
+                  {% endif %}
+                </td>
+                <td class="align-middle">
+                  {% if task.completed %}
+                  <a data-mdb-toggle="tooltip" title="Done"><i class="fas fa-check fa-lg text-secondary me-3"></i></a>
+                  {% else %}
+                  <a href="{% url 'todo:complete_task' task.id %}" data-mdb-toggle="tooltip" title="Done"><i class="fas fa-check fa-lg text-success me-3"></i></a>
+                  {% endif %}
+                  <a href="{% url 'todo:update_task' task.id %}" data-mdb-toggle="tooltip" title="Edit"><i class="fas fa-edit fa-lg text-info"></i></a>
+                  <a href="{% url 'todo:delete_task' task.id %}" data-mdb-toggle="tooltip" title="Remove"><i class="fas fa-trash-alt fa-lg text-warning"></i></a>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+          {% else %}
+          <p class="text-center">There is no task. Please create a new one.</p>
+          {% endif %}
+
+      </div>
+    </div>
+{% endblock content %}

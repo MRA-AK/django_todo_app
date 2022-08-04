@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'crispy_forms',
-    'accounts.apps.AccountsConfig'
+    'accounts.apps.AccountsConfig',
+    'todo.apps.TodoConfig'
 ]
 
 MIDDLEWARE = [
@@ -132,6 +133,8 @@ STATICFILES_DIRS = [
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+LOGIN_REDIRECT_URL = 'todo:task_list'
+LOGIN_URL = 'accounts:login'
 
 # Crispy forms settings
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
