@@ -40,7 +40,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'crispy_forms',
     'accounts.apps.AccountsConfig',
-    'todo.apps.TodoConfig'
+    'todo.apps.TodoConfig',
+    'rest_framework',
+    'django_filters',
 ]
 
 MIDDLEWARE = [
