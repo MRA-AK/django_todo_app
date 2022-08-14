@@ -140,3 +140,8 @@ LOGIN_URL = 'accounts:login'
 
 # Crispy forms settings
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+# Rest Framework settings
+REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema'
+}
