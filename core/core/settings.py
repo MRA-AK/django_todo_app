@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'todo.apps.TodoConfig',
     'rest_framework',
     'django_filters',
+    'drf_yasg',
 ]
 
 MIDDLEWARE = [
@@ -140,3 +141,8 @@ LOGIN_URL = 'accounts:login'
 
 # Crispy forms settings
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+# Rest Framework settings
+REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema'
+}

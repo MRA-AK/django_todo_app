@@ -6,3 +6,5 @@ django-crispy-forms==1.14.0
 djangorestframework
 markdown
 django-filter
+coreapi
+drf-yasg[validation]
