@@ -46,7 +46,6 @@ class TaskUpdateVeiw(LoginRequiredMixin, UpdateView):
     success_url = reverse_lazy("todo:task_list")
     form_class = TaskUpdateForm
     template_name = "todo/update_task.html"
-    
 
 
 class TaskCompleteView(LoginRequiredMixin, View):

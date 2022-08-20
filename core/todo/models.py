@@ -7,10 +7,10 @@ class Task(models.Model):
     Define a Task model in database.
     """
     CHOICES = (
-            ('1', 'High'),
-            ('2', 'Medium'),
-            ('3', 'Low'),
-        )
+        ('1', 'High'),
+        ('2', 'Medium'),
+        ('3', 'Low'),
+    )
 
     title = models.CharField(max_length=255)
     user = models.ForeignKey(User, on_delete=models.CASCADE)

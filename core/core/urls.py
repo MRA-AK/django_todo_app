@@ -23,16 +23,16 @@ from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 
 schema_view = get_schema_view(
-   openapi.Info(
-      title="Todo API",
-      default_version='v1',
-      description="A Todo app based on CBV and DRF",
-      terms_of_service="https://github.com/MRA-AK/django_todo_app/blob/main/LICENSE",
-      contact=openapi.Contact(email="mra1373@gmail.com"),
-      license=openapi.License(name="MIT License"),
-   ),
-   public=True,
-   permission_classes=[permissions.AllowAny],
+    openapi.Info(
+        title="Todo API",
+        default_version='v1',
+        description="A Todo app based on CBV and DRF",
+        terms_of_service="https://github.com/MRA-AK/django_todo_app/blob/main/LICENSE",
+        contact=openapi.Contact(email="mra1373@gmail.com"),
+        license=openapi.License(name="MIT License"),
+    ),
+    public=True,
+    permission_classes=[permissions.AllowAny],
 )
 
 urlpatterns = [
@@ -47,4 +47,4 @@ urlpatterns = [
 ]
 
 if settings.DEBUG:
-   urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
