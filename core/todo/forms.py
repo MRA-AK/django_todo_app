@@ -10,4 +10,4 @@ class TaskUpdateForm(forms.ModelForm):
 
     class Meta:
         model = Task
-        exclude  = ['user',]
+        exclude = ['user', ]

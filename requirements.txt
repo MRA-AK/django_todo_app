@@ -8,3 +8,7 @@ markdown
 django-filter
 coreapi
 drf-yasg[validation]
+
+# Reformat and linting
+black
+flake8
