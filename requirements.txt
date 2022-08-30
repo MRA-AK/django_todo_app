@@ -12,4 +12,10 @@ drf-yasg[validation]
 # Reformat, Linting and Tests
 black
 flake8
+
+# Background Process
+celery
+redis
+
+# Add dummy data
 Faker
