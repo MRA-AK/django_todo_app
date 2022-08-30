@@ -9,10 +9,13 @@ django-filter
 coreapi
 drf-yasg[validation]
 
-# Reformat and linting
+# Reformat, Linting and Tests
 black
 flake8
 
 # Background Process
 celery
 redis
+
+# Add dummy data
+Faker

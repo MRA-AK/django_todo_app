@@ -15,3 +15,7 @@ API root endpoint: http://localhost:8000/api/v1/task/
 - Swagger documentation: http://localhost:8000/swagger/
 - Redoc documentation: http://localhost:8000/redoc/
 - Export swagger in json format: http://localhost:8000/swagger/output.json/
+
+## Create dummy data
+For creating five dummy tasks:
+run `docker-compose exec backend sh -c "python manage.py insert_data"`
