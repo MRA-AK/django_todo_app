@@ -19,3 +19,7 @@ API root endpoint: http://localhost:8000/api/v1/task/
 ## Create dummy data
 For creating five dummy tasks:
 run `docker-compose exec backend sh -c "python manage.py insert_data"`
+
+## Run tests
+For running pytest:
+run `docker-compose exec backend sh -c "pytest ."`
