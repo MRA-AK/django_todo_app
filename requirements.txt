@@ -8,10 +8,14 @@ markdown
 django-filter
 coreapi
 drf-yasg[validation]
+djangorestframework-simplejwt
+django-cors-headers
 
 # Reformat, Linting and Tests
 black
 flake8
+pytest
+pytest-django
 
 # Background Process
 celery

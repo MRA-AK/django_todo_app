@@ -43,13 +43,17 @@ INSTALLED_APPS = [
     'accounts.apps.AccountsConfig',
     'todo.apps.TodoConfig',
     'rest_framework',
+    "rest_framework.authtoken",
     'django_filters',
     'drf_yasg',
+    "rest_framework_simplejwt",
+    "corsheaders",
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    "corsheaders.middleware.CorsMiddleware",
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -145,8 +149,16 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 # Rest Framework settings
 REST_FRAMEWORK = {
-    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema'
+    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework.authentication.BasicAuthentication",
+        "rest_framework.authentication.SessionAuthentication",
+        "rest_framework.authentication.TokenAuthentication",
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+    ]
 }
+
+CORS_ALLOW_ALL_ORIGINS = True
 
 # Celery settings
 CELERY_BROKER_URL = "redis://redis:6379"
