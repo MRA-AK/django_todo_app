@@ -23,9 +23,9 @@ class Command(BaseCommand):
         for _ in range(5):
             # Create five dummy tasks
             Task.objects.create(
-                user = user,
-                title = self.fake.text(max_nb_chars=20),
-                priority = random.choice(priority_list),
-                completed = random.choice([True, False]),
+                user=user,
+                title=self.fake.text(max_nb_chars=20),
+                priority=random.choice(priority_list),
+                completed=random.choice([True, False]),
             )
         print("5 dummy tasks created successfully. \U0001F642")
