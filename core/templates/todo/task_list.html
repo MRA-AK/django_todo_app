@@ -113,7 +113,8 @@
           $.get("/weather/"+city+"/", function(data, status){
             $("#weather_div").html("Temperature: " + data.temp + "&deg;C" + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" +
                                     "Humidity: " + data.humidity + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" +
-                                    "Wind: " + data.wind + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
+                                    "Wind: " + data.wind + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" +
+                                    data.description  + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
                                   );
             $("#weather_div").append('<img class="img-fluid-right" src=' + data.now_svg + ' alt="today" width="40px">')
             $('#weather_data').show();
