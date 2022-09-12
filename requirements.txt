@@ -27,3 +27,6 @@ Faker
 # Scraping weather
 requests
 bs4
+
+# Cache
+django-redis

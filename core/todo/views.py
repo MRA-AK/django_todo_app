@@ -1,4 +1,5 @@
 from django.views import View
+from django.core.cache import cache
 from django.shortcuts import redirect
 from django.views.generic.list import ListView
 from django.views.generic.edit import (
@@ -84,7 +85,26 @@ class TaskDeleteView(LoginRequiredMixin, DeleteView):
 @login_required
 def get_weather(request, city):
     result = {}
-    if city:
+    if not cache.get_many([f'{city}_temp', f'{city}_humidity', 
+                           f'{city}_wind', f'{city}_description', 
+                           f'{city}_now_svg']):
         result = scrape_weather(city)
-        print(result['now_svg'])
+        cache.set_many({
+                            f'{city}_temp':result['temp'], 
+                            f'{city}_humidity':result['humidity'], 
+                            f'{city}_wind':result['wind'], 
+                            f'{city}_description':result['description'], 
+                            f'{city}_now_svg':result['now_svg']
+                        })
+
+    cache_result = cache.get_many([f'{city}_temp', f'{city}_humidity', 
+                        f'{city}_wind', f'{city}_description', 
+                        f'{city}_now_svg'])
+    result = {
+        "temp": cache_result[f"{city}_temp"],
+        "humidity": cache_result[f"{city}_humidity"],
+        "wind": cache_result[f"{city}_wind"],
+        "description": cache_result[f"{city}_description"],
+        "now_svg": cache_result[f"{city}_now_svg"],
+    }
     return JsonResponse(result)
