@@ -15,17 +15,17 @@
 {% block title %}ToDo{% endblock title %}
 
 {% block content %}
-    <div class="content-section mt-3">
+    <div class="content-section mt-2">
       <div class="card p-2 m-4">
 
-          <div class="text-center pt-3 pb-2">
-            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-todo-list/check1.webp" alt="Check" width="60">
-            <h2 class="my-4">Task List</h2>
+          <div class="text-center pt-1">
+            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-todo-list/check1.webp" alt="Check" width="35">
+            <h3 class="">Task List</h3>
           </div>
 
-          <form class="p-2 mb-3" method="POST" action="{% url 'todo:create_task' %}">
+          <form class="p-2" method="POST" action="{% url 'todo:create_task' %}">
             {% csrf_token %}
-            <div class="input-group mb-3">
+            <div class="input-group">
               <input type="text" class="form-control rounded-4" required name="title" placeholder="Create new task"
               aria-label="Recipient's username" aria-describedby="button-addon2">
               <div class="col-md-3">
@@ -38,6 +38,15 @@
               <button class="btn btn-primary" type="submit">Add</button>
             </div>
           </form>
+
+          <div class="input-group p-2">
+            <input class="form-control mr-sm-2" type="text" id="city" placeholder="City..." name="city" required>
+            <button class="btn btn-outline-success my-2 my-sm-0" id="weather">Search</button>
+          </div>
+
+          <div class="h6 text-center p-2 mb-0" id="weather_data">
+            <div id="weather_div"></div>
+          </div>
           
           {% if tasks %}
           <table class="table m-0" style="width:100%">
@@ -87,3 +96,31 @@
       </div>
     </div>
 {% endblock content %}
+
+{% block script %}
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script>
+    $(document).ready(function(){
+      $('#weather_data').hide();
+
+      $("#weather").click(function(){
+        $('#weather_data').hide();
+        if( !$("#city").val() ) {
+          alert('Please enter the city.');    
+        }
+        else {
+          var city = $("#city").val()
+          $.get("/weather/"+city+"/", function(data, status){
+            $("#weather_div").html("Temperature: " + data.temp + "&deg;C" + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" +
+                                    "Humidity: " + data.humidity + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" +
+                                    "Wind: " + data.wind + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
+                                  );
+            $("#weather_div").append('<img class="img-fluid-right" src=' + data.now_svg + ' alt="today" width="40px">')
+            $('#weather_data').show();
+            //alert("Data: " + data + "\nStatus: " + status);
+          });
+        }
+      });
+    });
+  </script>
+{% endblock script %}

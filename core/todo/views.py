@@ -6,11 +6,15 @@ from django.views.generic.edit import (
     UpdateView,
     DeleteView,
 )
+from django.http.response import JsonResponse
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 
 from todo.forms import TaskUpdateForm
 from todo.models import Task
+
+from .weather import scrape_weather
 
 
 class TaskListView(LoginRequiredMixin, ListView):
@@ -75,3 +79,12 @@ class TaskDeleteView(LoginRequiredMixin, DeleteView):
 
     def get_queryset(self):
         return self.model.objects.filter(user=self.request.user)
+
+
+@login_required
+def get_weather(request, city):
+    result = {}
+    if city:
+        result = scrape_weather(city)
+        print(result['now_svg'])
+    return JsonResponse(result)
