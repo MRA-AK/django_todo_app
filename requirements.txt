@@ -30,3 +30,6 @@ bs4
 
 # Cache
 django-redis
+
+# Deploy
+gunicorn
