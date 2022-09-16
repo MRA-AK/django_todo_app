@@ -85,21 +85,23 @@ class TaskDeleteView(LoginRequiredMixin, DeleteView):
 @login_required
 def get_weather(request, city):
     result = {}
-    if not cache.get_many([f'{city}_temp', f'{city}_humidity', 
-                           f'{city}_wind', f'{city}_description', 
+    if not cache.get_many([f'{city}_temp', f'{city}_humidity',
+                           f'{city}_wind', f'{city}_description',
                            f'{city}_now_svg']):
         result = scrape_weather(city)
         cache.set_many({
-                            f'{city}_temp':result['temp'], 
-                            f'{city}_humidity':result['humidity'], 
-                            f'{city}_wind':result['wind'], 
-                            f'{city}_description':result['description'], 
-                            f'{city}_now_svg':result['now_svg']
+                            f'{city}_temp': result['temp'],
+                            f'{city}_humidity': result['humidity'],
+                            f'{city}_wind': result['wind'],
+                            f'{city}_description': result['description'],
+                            f'{city}_now_svg': result['now_svg']
                         })
 
-    cache_result = cache.get_many([f'{city}_temp', f'{city}_humidity', 
-                        f'{city}_wind', f'{city}_description', 
-                        f'{city}_now_svg'])
+    cache_result = cache.get_many([
+                                    f'{city}_temp', f'{city}_humidity',
+                                    f'{city}_wind', f'{city}_description',
+                                    f'{city}_now_svg'
+                                ])
     result = {
         "temp": cache_result[f"{city}_temp"],
         "humidity": cache_result[f"{city}_humidity"],
