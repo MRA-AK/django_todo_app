@@ -1,4 +1,5 @@
 from django.views import View
+from django.core.cache import cache
 from django.shortcuts import redirect
 from django.views.generic.list import ListView
 from django.views.generic.edit import (
@@ -6,11 +7,15 @@ from django.views.generic.edit import (
     UpdateView,
     DeleteView,
 )
+from django.http.response import JsonResponse
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 
 from todo.forms import TaskUpdateForm
 from todo.models import Task
+
+from .weather import scrape_weather
 
 
 class TaskListView(LoginRequiredMixin, ListView):
@@ -75,3 +80,31 @@ class TaskDeleteView(LoginRequiredMixin, DeleteView):
 
     def get_queryset(self):
         return self.model.objects.filter(user=self.request.user)
+
+
+@login_required
+def get_weather(request, city):
+    result = {}
+    if not cache.get_many([f'{city}_temp', f'{city}_humidity', 
+                           f'{city}_wind', f'{city}_description', 
+                           f'{city}_now_svg']):
+        result = scrape_weather(city)
+        cache.set_many({
+                            f'{city}_temp':result['temp'], 
+                            f'{city}_humidity':result['humidity'], 
+                            f'{city}_wind':result['wind'], 
+                            f'{city}_description':result['description'], 
+                            f'{city}_now_svg':result['now_svg']
+                        })
+
+    cache_result = cache.get_many([f'{city}_temp', f'{city}_humidity', 
+                        f'{city}_wind', f'{city}_description', 
+                        f'{city}_now_svg'])
+    result = {
+        "temp": cache_result[f"{city}_temp"],
+        "humidity": cache_result[f"{city}_humidity"],
+        "wind": cache_result[f"{city}_wind"],
+        "description": cache_result[f"{city}_description"],
+        "now_svg": cache_result[f"{city}_now_svg"],
+    }
+    return JsonResponse(result)

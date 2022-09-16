@@ -23,3 +23,10 @@ redis
 
 # Add dummy data
 Faker
+
+# Scraping weather
+requests
+bs4
+
+# Cache
+django-redis
